@@ -35,7 +35,7 @@ export default function RootLayout({
       className={`${workSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="dot-grid min-h-full flex flex-col bg-white dark:bg-black text-slate-900 dark:text-slate-100 antialiased">
+      <body className="min-h-full flex flex-col bg-white text-slate-900 antialiased dark:bg-black dark:text-slate-100">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
