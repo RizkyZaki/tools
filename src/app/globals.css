@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
+/* Class-based dark mode variant (required for next-themes) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Light mode ───────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background:     #ffffff;
+  --foreground:     #0f172a;
+  --surface:        #f8fafc;
+  --elevated:       #f1f5f9;
+  --border-color:   #e2e8f0;
+  --border-hover:   #cbd5e1;
+  --accent:         #3b82f6;
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #94a3b8;
+}
+
+/* ── Dark mode ────────────────────────────────────────────── */
+.dark {
+  --background:     #000000;
+  --foreground:     #f8fafc;
+  --surface:        #0a0a0a;
+  --elevated:       #111111;
+  --border-color:   #1f1f1f;
+  --border-hover:   #2d2d2d;
+  --accent:         #60a5fa;
+  --text-primary:   #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted:     #475569;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans:         var(--font-work-sans);
+  --color-background:  var(--background);
+  --color-foreground:  var(--foreground);
+  --color-brand:       #3b82f6;
+  --color-brand-hover: #60a5fa;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-work-sans), sans-serif;
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
+
+/* Dot grid — light mode */
+.dot-grid {
+  background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Dot grid — dark mode */
+.dark .dot-grid,
+.dark.dot-grid {
+  background-image: radial-gradient(circle, #1e293b 1px, transparent 1px);
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--foreground);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb { background: #1f1f1f; }
+::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+
+/* Markdown preview prose */
+[data-prose] { line-height: 1.75; }
+[data-prose] h1 { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin: 1.2rem 0 0.5rem; }
+[data-prose] h2 { font-size: 1.35rem; font-weight: 600; color: var(--text-primary); margin: 1rem 0 0.4rem; }
+[data-prose] h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-secondary); margin: 0.8rem 0 0.3rem; }
+[data-prose] p { margin: 0.6rem 0; }
+[data-prose] a { color: #3b82f6; text-decoration: underline; }
+[data-prose] strong { color: var(--text-primary); font-weight: 600; }
+[data-prose] em { font-style: italic; color: var(--text-secondary); }
+[data-prose] code { background: rgba(0,0,0,0.06); padding: 0.1em 0.35em; border-radius: 4px; font-size: 0.85em; color: #2563eb; }
+.dark [data-prose] code { background: rgba(255,255,255,0.06); color: #7dd3fc; }
+[data-prose] pre { background: var(--surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin: 0.75rem 0; overflow-x: auto; }
+[data-prose] pre code { background: none; padding: 0; font-size: 0.875em; }
+[data-prose] blockquote { border-left: 3px solid var(--border-color); padding-left: 1rem; color: var(--text-muted); margin: 0.75rem 0; font-style: italic; }
+[data-prose] ul { list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
+[data-prose] ol { list-style: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
+[data-prose] li { margin: 0.25rem 0; }
+[data-prose] hr { border: none; border-top: 1px solid var(--border-color); margin: 1rem 0; }
+[data-prose] table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.9em; }
+[data-prose] th { background: var(--surface); color: var(--text-primary); font-weight: 600; text-align: left; padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); }
+[data-prose] td { padding: 0.4rem 0.75rem; border: 1px solid var(--border-color); color: var(--text-secondary); }
+[data-prose] img { max-width: 100%; border-radius: 6px; }
