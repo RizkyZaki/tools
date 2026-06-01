@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -33,7 +33,7 @@ function SkeletonCard() {
   );
 }
 
-export default function Home() {
+function ToolsContent() {
   const searchParams = useSearchParams();
   const initialCategory = (searchParams.get('category') ?? ALL_CATEGORIES) as CategoryFilter;
 
@@ -189,5 +189,13 @@ export default function Home() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <ToolsContent />
+    </Suspense>
   );
 }
